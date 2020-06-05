@@ -9,3 +9,5 @@ Data preparation: .xpt files are imported and concatenated for the Demographics,
 Handling missing values: Outliers and the values of “Don’t know” and “Refused” are replaced with NA. Features containing %30 or more missing values are excluded from the study. For the remaining features; missing values are changed with mean for continuous variables, with mode for binary, ratio and categorical variables, with weighted mean of interval means for interval variables. 
 
 This process is not available in this repository for now. 
+
+Feature Selection: Principal component analysis is applied to the continuous variables in each category.
