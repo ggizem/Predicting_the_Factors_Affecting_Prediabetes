@@ -1,15 +1,15 @@
-#####################Create .csv files containing the necessary variables of Examination, Laboratory and Questionnarie data
+################Create .csv files containing the necessary variables of Demographics, Examination, Laboratory and Questionnarie data
 install.packages("SASxport")
 library(SASxport)
 
-##### DEMOGRAPHICS DATA
+##### Demographics Data
 lookup.xport("DEMO_H.XPT")
 D1 <- read.xport("DEMO_H.XPT")
 D1 <- D1[, (names(D1) %in% c("SEQN","RIAGENDR","RIDAGEYR","RIDRETH1", "DMQMILIZ", "DMDFMSIZ", "INDHHIN2", "DMDHREDU", "DMDBORN4","DMDCITZN","DMDMARTL", "DMDHHSIZ","INDFMIN2","INDFMPIR"))]
 
 dData <- D1
 
-##### EXAMINATION DATA
+##### Examination Data
 lookup.xport("BPX_H.XPT")
 E1 <- read.xport("BPX_H.XPT")
 E1 <- E1[, (names(E1) %in% c("SEQN","BPXPLS","BPXPULS"))]
@@ -24,7 +24,7 @@ E3 <- E3[, (names(E3) %in% c("SEQN","BPXSY1","BPXSY2", "BPXSY3", "BPXSY4", "BPXD
 
 eData <- Reduce(function(x, y) merge(x, y, by="SEQN", all=TRUE), list(E1,E2,E3))
 
-######### LABORATORY DATA 
+##### Laboratory Data 
 L1 <- read.xport("SSTOXO_H.XPT")
 L1 <- L1[, (names(L1) %in% c("SEQN","SSTOXG","SSTOXM"))]
 
@@ -79,7 +79,7 @@ L13 <- L13[, (names(L13) %in% c("SEQN","LBDB12"))]
 lData <- Reduce(function(x, y) merge(x, y, by="SEQN", all=TRUE), list(L1,L2,L3,L4,L5,L6,L7,L8,L9,L10,L11,L12,L13))
 
 
-######## QUESTIONNARIE DATA
+##### Questionnarie Data
 Q1 <- read.xport("DIQ_H.XPT")
 Q1 <- Q1[, (names(Q1) %in% c("SEQN","DIQ170","DIQ172","DIQ180"))]
 
@@ -207,109 +207,100 @@ Q31 <- Q31[, (names(Q31) %in% c("SEQN","SMD460"))]
 
 qData <- Reduce(function(x, y) merge(x, y, by="SEQN", all=TRUE), list(Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10,Q11,Q12,Q13,Q14,Q15,Q16,Q17,Q18,Q19, Q20, Q21, Q22, Q23, Q24, Q25, Q26, Q27, Q28, Q29, Q30, Q31))
 
-################### EXTRACT FEATURES ACCORDING TO LITERATURE REVIEW
+########### CREATE NEW VARIABLES
 
 # newly created Mean SBP
-eData$mean_SBP  <- rowMeans(eData[,c("BPXSY1","BPXSY2","BPXSY3","BPXSY4")], na.rm=TRUE) #mean with nulls
+mean_SBP  <- rowMeans(eData[,c("BPXSY1","BPXSY2","BPXSY3","BPXSY4")], na.rm=TRUE) 
 
 # newly created Mean DBP
-eData$mean_DBP  <- rowMeans(eData[,c("BPXDI1","BPXDI2","BPXDI3","BPXDI4")], na.rm=TRUE)
+mean_DBP  <- rowMeans(eData[,c("BPXDI1","BPXDI2","BPXDI3","BPXDI4")], na.rm=TRUE)
 
 # newly created Processed Food Expenditure
-qData$processed_food_expenditure <- (qData$CBD120 + qData$CBD130)/(qData$CBD070 + qData$CBD090 + qData$CBD110 + qData$CBD120 + qData$CBD130)
+processed_food_expenditure <- (qData$CBD120 + qData$CBD130)/(qData$CBD070 + qData$CBD090 + qData$CBD110 + qData$CBD120 + qData$CBD130)
 
 # newly created Creatine Kinase, 1=no, 2=yes
 
-qData$creatine_kinase <- ifelse(!is.na(qData$CKQ010) & qData$CKQ010 == 1 & !is.na(qData$CKQ020) & qData$CKQ020 == 1 & !is.na(qData$CKQ040) & qData$CKQ040 == 1 & !is.na(qData$CKD060) & qData$CKD060 == 1, 1, 
+creatine_kinase <- ifelse(!is.na(qData$CKQ010) & qData$CKQ010 == 1 & !is.na(qData$CKQ020) & qData$CKQ020 == 1 & !is.na(qData$CKQ040) & qData$CKQ040 == 1 & !is.na(qData$CKD060) & qData$CKD060 == 1, 1, 
                                 ifelse((!is.na(qData$CKQ010) & qData$CKQ010 == 2) | (!is.na(qData$CKQ020) & qData$CKQ020 == 2) | (!is.na(qData$CKQ040) & qData$CKQ040 == 2) | (!is.na(qData$CKD060) & qData$CKD060 == 2), 2, NA)
 )
 
 
 # newly created number of processed food meals
-qData$number_of_processed_food_meals <- (qData$DBD895*4) + qData$DBD905 + qData$DBD910 
+number_of_processed_food_meals <- (qData$DBD895*4) + qData$DBD905 + qData$DBD910 
 
 # newly created Disability, 1=no, 2=yes
-qData$disability <- ifelse((!is.na(qData$DLQ010) & qData$DLQ010 == 1) & (!is.na(qData$DLQ020) & qData$DLQ020 == 1) & (!is.na(qData$DLQ040) & qData$DLQ040 == 1) & (!is.na(qData$DLQ050) & qData$DLQ050 == 1) & (!is.na(qData$DLQ060) & qData$DLQ060 == 1) & (!is.na(qData$DLQ080) & qData$DLQ080 == 1), 1,
+disability <- ifelse((!is.na(qData$DLQ010) & qData$DLQ010 == 1) & (!is.na(qData$DLQ020) & qData$DLQ020 == 1) & (!is.na(qData$DLQ040) & qData$DLQ040 == 1) & (!is.na(qData$DLQ050) & qData$DLQ050 == 1) & (!is.na(qData$DLQ060) & qData$DLQ060 == 1) & (!is.na(qData$DLQ080) & qData$DLQ080 == 1), 1,
                            ifelse((!is.na(qData$DLQ010) & qData$DLQ010 == 2) | (!is.na(qData$DLQ020) & qData$DLQ020 == 2) | (!is.na(qData$DLQ040) & qData$DLQ040 == 2) | (!is.na(qData$DLQ050) & qData$DLQ050 == 2) | (!is.na(qData$DLQ060) & qData$DLQ060 == 2) | (!is.na(qData$DLQ080) & qData$DLQ080 == 2), 2, NA)
 )
 
 # newly created HPV vaccination
-qData$HPV_vaccination <- ifelse( (!is.na(qData$IMQ040) & (qData$IMQ040 == 1)) | (!is.na(qData$IMQ070) & (qData$IMQ070 == 1)) , 1,
+HPV_vaccination <- ifelse( (!is.na(qData$IMQ040) & (qData$IMQ040 == 1)) | (!is.na(qData$IMQ070) & (qData$IMQ070 == 1)) , 1,
                                  ifelse( (!is.na(qData$IMQ040) & (qData$IMQ040 == 2)) | (!is.na(qData$IMQ070) & (qData$IMQ070 == 2)) , 2, NA))
 
 
 # newly created Urine Leakage, 1=no, 2=yes
-qData$urine_leakage <- ifelse((!is.na(qData$KIQ042) & qData$KIQ042 == 1) & (!is.na(qData$KIQ044) & qData$KIQ044 == 1) & (!is.na(qData$KIQ046) & qData$KIQ046 == 1) , 1,
+urine_leakage <- ifelse((!is.na(qData$KIQ042) & qData$KIQ042 == 1) & (!is.na(qData$KIQ044) & qData$KIQ044 == 1) & (!is.na(qData$KIQ046) & qData$KIQ046 == 1) , 1,
                               ifelse((!is.na(qData$KIQ042) & qData$KIQ042 == 2) | (!is.na(qData$KIQ044) & qData$KIQ044 == 2) | (!is.na(qData$KIQ046) & qData$KIQ046 == 2) , 2, NA)
 )
 
 # newly created Pesticide, 1=no, 2=yes
-qData$pesticide <- ifelse((!is.na(qData$PUQ100) & qData$PUQ100 == 1) & (!is.na(qData$PUQ110) & qData$PUQ110 == 1) , 1,
+pesticide <- ifelse((!is.na(qData$PUQ100) & qData$PUQ100 == 1) & (!is.na(qData$PUQ110) & qData$PUQ110 == 1) , 1,
                           ifelse((!is.na(qData$PUQ100) & qData$PUQ100 == 2) | (!is.na(qData$PUQ110) & qData$PUQ110 == 2) , 2, NA)
 )
 
 # newly created Vigorous Activity, 1=no, 2=yes
-qData$vigorous_activity <- ifelse((!is.na(qData$PAQ605) & qData$PAQ605 == 1) & (!is.na(qData$PAQ650) & qData$PAQ650 == 1) , 1,
-                                  ifelse((!is.na(qData$PAQ605) & qData$PAQ605 == 2) | (!is.na(qData$PAQ650) & qData$PAQ650 == 2) , 2, NA)
+vigorous_activity <- ifelse((!is.na(qData$PAQ605) & qData$PAQ605 == 2) | (!is.na(qData$PAQ650) & qData$PAQ650 == 2) , 2, NA)
 )
 
 
 # newly created Moderate Activity, 1=no, 2=yes
-qData$modarate_activity <- ifelse((!is.na(qData$PAQ620) & qData$PAQ620 == 1) & (!is.na(qData$PAQ665) & qData$PAQ665 == 1) , 1,
+moderate_activity <- ifelse((!is.na(qData$PAQ620) & qData$PAQ620 == 1) & (!is.na(qData$PAQ665) & qData$PAQ665 == 1) , 1,
                                   ifelse((!is.na(qData$PAQ620) & qData$PAQ620 == 2) | (!is.na(qData$PAQ665) & qData$PAQ665 == 2) , 2, NA)
 )
 
 # newly created Functional Limitation, 1=no, 2=yes
-qData$functional_limitation <- ifelse((!is.na(qData$PFQ020) & qData$PFQ020 == 1) & (!is.na(qData$PFQ033) & qData$PFQ033 == 1) & (!is.na(qData$PFQ049) & qData$PFQ049 == 1) & (!is.na(qData$PFQ051) & qData$PFQ051 == 1) & (!is.na(qData$PFQ054) & qData$PFQ054 == 1) & (!is.na(qData$PFQ057) & qData$PFQ057 == 1) & (!is.na(qData$PFQ059) & qData$PFQ059 == 1) , 1,
+functional_limitation <- ifelse((!is.na(qData$PFQ020) & qData$PFQ020 == 1) & (!is.na(qData$PFQ033) & qData$PFQ033 == 1) & (!is.na(qData$PFQ049) & qData$PFQ049 == 1) & (!is.na(qData$PFQ051) & qData$PFQ051 == 1) & (!is.na(qData$PFQ054) & qData$PFQ054 == 1) & (!is.na(qData$PFQ057) & qData$PFQ057 == 1) & (!is.na(qData$PFQ059) & qData$PFQ059 == 1) , 1,
                                       ifelse((!is.na(qData$PFQ020) & qData$PFQ020 == 2) | (!is.na(qData$PFQ033) & qData$PFQ033 == 2) | (!is.na(qData$PFQ049) & qData$PFQ049 == 2) | (!is.na(qData$PFQ051) & qData$PFQ051 == 2) | (!is.na(qData$PFQ054) & qData$PFQ054 == 2) | (!is.na(qData$PFQ057) & qData$PFQ057 == 2) | (!is.na(qData$PFQ059) & qData$PFQ059 == 2) , 2, NA)
 )
 
 
 # newly created Sleeping Trouble, 1=no, 2=yes
-qData$sleeping_trouble <- ifelse((!is.na(qData$SLQ050) & qData$SLQ050 == 1) & (!is.na(qData$SLQ060) & qData$SLQ060 == 1) , 1,
+sleeping_trouble <- ifelse((!is.na(qData$SLQ050) & qData$SLQ050 == 1) & (!is.na(qData$SLQ060) & qData$SLQ060 == 1) , 1,
                                  ifelse((!is.na(qData$SLQ050) & qData$SLQ050 == 2) | (!is.na(qData$SLQ060) & qData$SLQ060 == 2) , 2, NA)
 )
 
 # newly created Secondhand Smoking, 1=no, 2=yes
-qData$secondhand_smoking <- ifelse((!is.na(qData$SMQ858) & qData$SMQ858 == 1) & (!is.na(qData$SMQ862) & qData$SMQ862 == 1) & (!is.na(qData$SMQ868) & qData$SMQ868 == 1) & (!is.na(qData$SMQ872) & qData$SMQ872 == 1) & (!is.na(qData$SMQ876) & qData$SMQ876 == 1) & (!is.na(qData$SMQ880) & qData$SMQ880 == 1)  , 1,
+secondhand_smoking <- ifelse((!is.na(qData$SMQ858) & qData$SMQ858 == 1) & (!is.na(qData$SMQ862) & qData$SMQ862 == 1) & (!is.na(qData$SMQ868) & qData$SMQ868 == 1) & (!is.na(qData$SMQ872) & qData$SMQ872 == 1) & (!is.na(qData$SMQ876) & qData$SMQ876 == 1) & (!is.na(qData$SMQ880) & qData$SMQ880 == 1)  , 1,
                                    ifelse((!is.na(qData$SMQ858) & qData$SMQ858 == 2) | (!is.na(qData$SMQ862) & qData$SMQ862 == 2) | (!is.na(qData$SMQ868) & qData$SMQ868 == 2) | (!is.na(qData$SMQ872) & qData$SMQ872 == 2) | (!is.na(qData$SMQ876) & qData$SMQ876 == 2) | (!is.na(qData$SMQ880) & qData$SMQ880 == 2) , 2, NA)
 )
 
-# Gestaional DM - MULTIPLE IMPUTATION
-qData$gestational_dm <- qData$RHQ162
+# Hysterectomy 
 
-# Overweight Baby at birth - MULTIPLE IMPUTATION
+hysterectomy  <- qData$RHD280
 
-qData$overweight_baby_at_birth <- qData$RHQ172
+# Bilateral ovariectomy 
 
+bilateral_ovariectomy  <- qData$RHQ305
 
-# Hysterectomy - MULTIPLE IMPUTATION
+# Oral contraception 
 
-qData$hysterectomy  <- qData$RHD280
+oral_contraception  <- qData$RHQ420
 
-# Bilateral ovariectomy - MULTIPLE IMPUTATION
+# Female hormones intake 
 
-qData$bilateral_ovariectomy  <- qData$RHQ305
+female_hormones_intake  <- qData$RHQ540
 
-# Oral contraception - MULTIPLE IMPUTATION
+cData <- Reduce(function(x, y) merge(x, y, by="SEQN", all=TRUE), list(mean_SBP, mean_DBP, processed_food_expenditure, creatine_kinase, number_of_processed_food_meals, disability, HPV_vaccination, urine_leakage, pesticide, vigorous_activity, modarate_activity, sleeping_trouble,secondhand_smoking, hysterectomy, bilateral_ovariectomy, oral_contraception, female_hormones_intake))
 
-qData$oral_contraception  <- qData$RHQ420
-
-# Female hormones intake - MULTIPLE IMPUTATION
-
-qData$female_hormones_intake  <- qData$RHQ540
-
-################################################ CREATE .csv FILES
+############### CREATE .csv FILES
 
 write.csv2(dData,'dData.csv')
-
 write.csv2(eData,'eData.csv')
-
 write.csv2(lData,'lData.csv')
-
 write.csv2(qData,'qData.csv')
+write.csv2(cData,'cData.csv')
 
-##################################### CREATE THE LABEL AS A CATEGORICAL VARIABLE (normoglycemic, prediabetic, diabetic)
+############### CREATE THE LABEL AS A CATEGORICAL VARIABLE (normoglycemic, prediabetic, diabetic)
 library(foreign)
 library(ggplot2)
 library(readxl)
@@ -341,14 +332,9 @@ result$classify <- ifelse( (!is.na(result$FPG) & (result$FPG > 125)) | (!is.na(r
 result <- result[complete.cases(result[ , 5]),]
 sum(is.na(result$classify))
 
-allData <- Reduce(function(x, y) merge(x, y, by="SEQN", all=TRUE), list(dData,eData,lData,qData))
+allData <- Reduce(function(x, y) merge(x, y, by="SEQN", all=TRUE), list(dData,eData,lData,qData, cData))
 
 
 allData_with_results <- merge(allData, result, by="SEQN")
 
 write.csv2(allData_with_results,'allData_with_results.csv')
-
-
-
-
-
