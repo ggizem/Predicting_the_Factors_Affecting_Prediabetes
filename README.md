@@ -4,9 +4,11 @@ Predicting the Factors Affecting Prediabetes
 NHANES 2013-2014 data can be found in: https://wwwn.cdc.gov/nchs/nhanes/ContinuousNhanes/Default.aspx?BeginYear=2013 
 Because data are available as seperate .xpt files, only the files that contain the necessary variables are used. 
 
-Data preparation: .xpt files are imported and concatenated for the Demographics, Examination, Laboratory and Questionnarie data. New features are extracted according to literature review. As a result, we had 5 categories of data: Demographics, Examination, Laboratory, Questionnarie and Newly Created Data. The label is created using 3 variables in the data: FPG, OGTT and HbA1c. (American Diabetes Association reference intervals are used to label data points as normoglycemic, prediabetic and diabetic: https://www.diabetes.org/a1c/diagnosis ) The data points whose label is diabetic are removed from the analysis in order to make the problem a binary classification.
+Data preparation: 
+.xpt files are imported and concatenated for the Demographics, Examination, Laboratory and Questionnarie data. New features are extracted according to literature review. As a result, we had 5 categories of data: Demographics, Examination, Laboratory, Questionnarie and Newly Created Data. The label is created using 3 variables in the data: FPG, OGTT and HbA1c. (American Diabetes Association reference intervals are used to label data points as normoglycemic, prediabetic and diabetic: https://www.diabetes.org/a1c/diagnosis ) The data points whose label is diabetic are removed from the analysis in order to make the problem a binary classification.
 
-Handling missing values: Outliers and the values of “Don’t know” and “Refused” are replaced with NA. Features containing %30 or more missing values are excluded from the study. For the remaining features; missing values are changed with mean for continuous variables, with mode for binary, ratio and categorical variables, with weighted mean of interval means for interval variables. 
+Handling missing values: 
+Outliers and the values of “Don’t know” and “Refused” are replaced with NA. Features containing %30 or more missing values are excluded from the study. For the remaining features; missing values are changed with mean for continuous variables, with mode for binary, ratio and categorical variables, with weighted mean of interval means for interval variables. 
 
 This process is not available in this repository for now. 
 
@@ -15,4 +17,8 @@ Feature Selection:
 2) Lasso Regression: "glmnet" is used to perform lasso regression. 43 features are chosen by the algorithm. 
 3) Recursive Feature Elimination: "caret" is used to perform RFE. 67 features are chosen by the algorithm. 
 4) Random Forest: "boruta" is used. 67 features are chosen by the algorithm. 
-5) PCA: 
+(Common variables of Lasso Regression and Random Forest results, and all the variables resulted from the RFE are selected The variable number after the feature selection is 37 and it includes 20 continuous, 2 ratio, 12 binary, 1 nominal and 2 ordinal variables.)
+5) PCA: Since the number of variables was still much, a second PCA was applied. The variable number decreased from 37 to 33. 
+
+Logistic Regression Model Development: 
+A Logistic Regression model is constructed using the final 33 features to elicit significant attributes affecting prediabetes. Significant variables are determined by the algorithm. The effect of these variables gauged with basic mathematics. 
