@@ -10,5 +10,9 @@ Handling missing values: Outliers and the values of “Don’t know” and “Re
 
 This process is not available in this repository for now. 
 
-Feature Selection: Kaiser-Meyer-Olkin (KMO) Test is run for the continuous variables in each category. Because only the examination data and newly created data have acceptaple KMO results, Principle Component Analysis (PCA) is applied to these two categories. As a result, 5 continuous variables of the examination data are reduced to 2, whereas, 4 continuous variables of the newly created data are reduced also 2.  
-
+Feature Selection: 
+1) PCA: Kaiser-Meyer-Olkin (KMO) Test is run for the continuous variables in each category. Because only the examination data and newly created data have acceptaple KMO results, Principle Component Analysis (PCA) is applied to these two categories. As a result, 5 continuous variables of the examination data are reduced to 2, whereas, 4 continuous variables of the newly created data are reduced also to 2.  
+2) Lasso Regression: "glmnet" is used to perform lasso regression. 43 features are chosen by the algorithm. 
+3) Recursive Feature Elimination: "caret" is used to perform RFE. 67 features are chosen by the algorithm. 
+4) Random Forest: "boruta" is used. 67 features are chosen by the algorithm. 
+5) PCA: 
