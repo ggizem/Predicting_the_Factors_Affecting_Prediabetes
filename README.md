@@ -20,5 +20,5 @@ Feature Selection:
 (Common variables of Lasso Regression and Random Forest results, and all the variables resulted from the RFE are selected The variable number after the feature selection is 37 and it includes 20 continuous, 2 ratio, 12 binary, 1 nominal and 2 ordinal variables.)
 5) PCA: Since the number of variables was still much, a second PCA was applied. The variable number decreased from 37 to 33. 
 
-Logistic Regression Model Development: 
+Logistic Regression: 
 A Logistic Regression model is constructed using the final 33 features to elicit significant attributes affecting prediabetes. Significant variables are determined by the algorithm. The effect of these variables gauged with basic mathematics. 
