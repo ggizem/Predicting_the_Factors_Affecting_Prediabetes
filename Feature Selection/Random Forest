@@ -1,9 +1,8 @@
 library(Boruta)
 library(readxl)
 
-all_data <- read.csv(file="allData_without_diabetic.xlsx", header=TRUE, sep=",")
-
-all_data <- all_data[,-c(1:2,142:144)]
+all_Data <- read_excel("D:/allData_without_diabetic.xlsx")
+all_Data <- all_Data[,-c(1,141:143 )]
 
 str(all_data)
 
