@@ -8,7 +8,7 @@ The Health and Nutrition Examination Survey (NHANES) is a program that is conduc
 Because data are available as seperate .xpt files, only the files that contain the necessary variables are used. 
 
 Dimension:
-By means of the literature review, a total number of 215 variables are decided to be used, 45 of which is laboratory data, 14 is examination data, 118 is questionnaire, 5 is dietary and 13 is demographics data. In addition, 20 new variables are created using additional examination and questionnaire variables. 
+By means of the literature review, a total number of 215 variables are decided to be used, 45 of which is laboratory data, 14 is examination data, 118 is questionnaire, 5 is dietary and 13 is demographics data. In addition, 20 new variables are created using additional examination and questionnaire variables, which leads to 235 variables. 
 
 Data preparation: 
 .xpt files are imported and concatenated for the Demographics, Examination, Laboratory and Questionnarie data. New features are extracted according to literature review. As a result, we had 5 categories of data: Demographics, Examination, Laboratory, Questionnarie and Newly Created Data. The label is created using 3 variables in the data: FPG, OGTT and HbA1c. (American Diabetes Association reference intervals are used to label data points as normoglycemic, prediabetic and diabetic: https://www.diabetes.org/a1c/diagnosis ) The data points whose label is diabetic are removed from the analysis in order to make the problem a binary classification.
