@@ -5,7 +5,6 @@ rfData <- read_excel("rfData.xlsx")
 glm.fit <- glm(classify ~ ., data = rfData, family = binomial)
 
 summary(glm.fit)
-?summary
 glm.probs <- predict(glm.fit,type = "response")
 glm.probs[1:33]
 
@@ -61,7 +60,6 @@ predict(glm.fit.after.drop, unknownOrg, type = "response")
 table(drop$BPQ080, classify)
 unknownOrg2 <- read.table("cholesterol.txt", header=TRUE, sep=",", dec=".")
 predict(glm.fit.after.drop, unknownOrg2, type = "response")
-
 
 unknownOrg3 <- read.table("potassiumlevel.txt", header=TRUE, sep=",", dec=".")
 predict(glm.fit.after.drop, unknownOrg3, type = "response")
