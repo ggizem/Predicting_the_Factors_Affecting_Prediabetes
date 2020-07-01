@@ -14,7 +14,7 @@ By means of the literature review, a total number of 215 variables are decided t
 | Questionnaire   | 118            |   
 | Dietary         | 5              |   
 | Demographics    | 13             |    
-| **Total**       | **215 **       |  
+| **Total**       | **215**        |  
 
 [Data preparation](https://github.com/ggizem/Predicting_the_Factors_Affecting_Prediabetes/blob/master/Data%20Preparation/Data%20Preparation.R): .xpt files are imported and concatenated for the Demographics, Examination, Laboratory and Questionnarie data. New features are extracted according to literature review. As a result, we had 5 categories of data: Demographics, Examination, Laboratory, Questionnarie and Newly Created Data. The label is created using 3 variables in the data: FPG, OGTT and HbA1c. (American Diabetes Association reference intervals are used to label data points as normoglycemic, prediabetic and diabetic: https://www.diabetes.org/a1c/diagnosis ) The data points whose label is diabetic are removed from the analysis in order to make the problem a binary classification.
 
