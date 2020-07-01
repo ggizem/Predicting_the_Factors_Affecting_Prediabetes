@@ -1,13 +1,5 @@
-# ensure the results are repeatable
-set.seed(1234)
-# load the library
-library(mlbench)
-library(caret)
 library(readxl)
-library(e1071)
-library(klaR)
-
-# load the data
+library(caret)
 
 data <- read_excel("D:/allData_without_diabetic.xlsx")
 data <- data[,-c(1,141:143 )]
