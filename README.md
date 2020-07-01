@@ -1,7 +1,6 @@
 # Predicting the Factors Affecting Prediabetes 
 
 Problem:
-
 Prediabetes is the state of plasma glucose being higher than the normal range yet below that of diabetes. It is a medical condition with the risk of causing diabetes in the future. 
 
 Data:
