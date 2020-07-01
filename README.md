@@ -7,6 +7,12 @@ Because data are available as seperate .xpt files, only the files that contain t
 
 By means of the literature review, a total number of 215 variables are decided to be used, 45 of which are Laboratory, 14 are examination, 118 are questionnaire, 5 are dietary and 13 are demographics data. In addition, 20 new variables are created using additional examination and questionnaire variables, which leads to 235 variables. 
 
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
+
 [Data preparation](https://github.com/ggizem/Predicting_the_Factors_Affecting_Prediabetes/blob/master/Data%20Preparation/Data%20Preparation.R): .xpt files are imported and concatenated for the Demographics, Examination, Laboratory and Questionnarie data. New features are extracted according to literature review. As a result, we had 5 categories of data: Demographics, Examination, Laboratory, Questionnarie and Newly Created Data. The label is created using 3 variables in the data: FPG, OGTT and HbA1c. (American Diabetes Association reference intervals are used to label data points as normoglycemic, prediabetic and diabetic: https://www.diabetes.org/a1c/diagnosis ) The data points whose label is diabetic are removed from the analysis in order to make the problem a binary classification.
 
 Handling missing values: Outliers and the values of “Don’t know” and “Refused” are replaced with NA. Features containing %30 or more missing values are excluded from the study. For the remaining features; missing values are changed with mean for continuous variables, with mode for binary, ratio and categorical variables, with weighted mean of interval means for interval variables. This process is conducted using Excel.
