@@ -14,11 +14,11 @@ Handling missing values: Outliers and the values of “Don’t know” and “Re
 This process is not available in this repository for now. 
 
 Feature Selection: 
-1) PCA: Kaiser-Meyer-Olkin (KMO) Test is run for the continuous variables in each category. Because only the examination data and newly created data have acceptaple KMO results, Principle Component Analysis (PCA) is applied to these two categories. As a result, 5 continuous variables of the examination data are reduced to 2, whereas, 4 continuous variables of the newly created data are reduced also to 2.  
-2) Lasso Regression: "glmnet" is used to perform lasso regression. 43 features are chosen by the algorithm. 
-3) Recursive Feature Elimination: "caret" is used to perform RFE. 67 features are chosen by the algorithm. 
-4) Random Forest: "boruta" is used. 67 features are chosen by the algorithm. 
+1) [PCA](https://github.com/ggizem/Predicting_the_Factors_Affecting_Prediabetes/blob/master/Feature%20Selection/PCA_1.R): Kaiser-Meyer-Olkin (KMO) Test is run for the continuous variables in each category. Because only the examination data and newly created data have acceptaple KMO results, Principle Component Analysis (PCA) is applied to these two categories. As a result, 5 continuous variables of the examination data are reduced to 2, whereas, 4 continuous variables of the newly created data are reduced also to 2.  
+2) [Lasso Regression](https://github.com/ggizem/Predicting_the_Factors_Affecting_Prediabetes/blob/master/Feature%20Selection/Lasso%20Regression.R): 43 features are chosen by the algorithm. 
+3) [Recursive Feature Elimination](https://github.com/ggizem/Predicting_the_Factors_Affecting_Prediabetes/blob/master/Feature%20Selection/Recursive%20Feature%20Elimination.R): 67 features are chosen by the algorithm. 
+4) [Random Forest](https://github.com/ggizem/Predicting_the_Factors_Affecting_Prediabetes/blob/master/Feature%20Selection/Random%20Forest.R):67 features are chosen by the algorithm. 
 (Common variables of Lasso Regression and Random Forest results, and all the variables resulted from the RFE are selected The variable number after the feature selection is 37 and it includes 20 continuous, 2 ratio, 12 binary, 1 nominal and 2 ordinal variables.)
-5) PCA: Since the number of variables was still much, a second PCA was applied. The variable number decreased from 37 to 33. 
+5) [PCA](https://github.com/ggizem/Predicting_the_Factors_Affecting_Prediabetes/blob/master/Feature%20Selection/PCA_2.R): Since the number of variables was still much, a second PCA was applied. The variable number decreased from 37 to 33. 
 
-Logistic Regression: A Logistic Regression model is constructed using the final 33 features to elicit significant attributes affecting prediabetes. Significant variables are determined by the algorithm. The effect of these variables gauged with basic mathematics. 
+[Logistic Regression](https://github.com/ggizem/Predicting_the_Factors_Affecting_Prediabetes/blob/master/Logistic%20Regression/Logistic%20Regression.R): A Logistic Regression model is constructed using the final 33 features to elicit significant attributes affecting prediabetes. Significant variables are determined by the algorithm. The effect of these variables gauged with basic mathematics. 
