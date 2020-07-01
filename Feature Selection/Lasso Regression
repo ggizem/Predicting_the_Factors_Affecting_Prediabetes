@@ -1,8 +1,7 @@
-library(tidyverse)
+library(readxl)
+library(dplyr)
 library(caret)
 library(glmnet)
-library(gower)
-library(readxl)
 
 all_Data <- read_excel("D:/allData_without_diabetic.xlsx")
 
@@ -17,7 +16,7 @@ training.samples <- all_Data$classify %>% createDataPartition(p = 0.8, list = FA
 train.data  <- all_Data[training.samples, ]
 test.data <- all_Data[-training.samples, ]
 
-# Dumy code categorical predictor variables
+# Dummy code categorical predictor variables
 x <- model.matrix(classify~., train.data)[,-1]
 # Convert the outcome (class) to a numerical variable
 y <- ifelse(train.data$classify == "prediabetic", 1, 0)
