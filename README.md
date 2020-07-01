@@ -5,16 +5,17 @@ Problem: Prediabetes is the state of plasma glucose being higher than the normal
 Data: The Health and Nutrition Examination Survey (NHANES) is a program that is conducted to gather information about health and nutrition status of some of the citizens of United States. The study includes interviews and physical examinations of the 5000 participants. The examination composes of medical, dental, physiological measurements and laboratory tests. NHANES 2013-2014 data can be found in: https://wwwn.cdc.gov/nchs/nhanes/ContinuousNhanes/Default.aspx?BeginYear=2013 
 Because data are available as seperate .xpt files, only the files that contain the necessary variables are used. 
 
-By means of the literature review, a total number of 215 variables are decided to be used as follows: In addition, 20 new variables are created using additional examination and questionnaire variables, which leads to 235 variables. 
+By means of the literature review, a total number of 195 variables are decided to be used.In addition, 20 new variables are created using additional examination and questionnaire variables, which leads to 215 variables. 
 
-| Data Categories | # of Variables | 
-| --------------- |:--------------:| 
-| Laboratory      | 45             | 
-| Examination     | 14             |  
-| Questionnaire   | 118            |   
-| Dietary         | 5              |   
-| Demographics    | 13             |    
-| **Total**       | **215**        |  
+| Data Categories   | # of Variables | 
+| ------------------|:--------------:| 
+| Laboratory        | 45             | 
+| Examination       | 14             |  
+| Questionnaire     | 118            |   
+| Dietary           | 5              |   
+| Demographics      | 13             |    
+| Created variables | 20             | 
+| **Total**         | **215**        |  
 
 [Data preparation](https://github.com/ggizem/Predicting_the_Factors_Affecting_Prediabetes/blob/master/Data%20Preparation/Data%20Preparation.R): .xpt files are imported and concatenated for the Demographics, Examination, Laboratory and Questionnarie data. New features are extracted according to literature review. As a result, we had 5 categories of data: Demographics, Examination, Laboratory, Questionnarie and Newly Created Data. The label is created using 3 variables in the data: FPG, OGTT and HbA1c. (American Diabetes Association reference intervals are used to label data points as normoglycemic, prediabetic and diabetic: https://www.diabetes.org/a1c/diagnosis ) The data points whose label is diabetic are removed from the analysis in order to make the problem a binary classification.
 
